@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div  className="h-[500px]">
       <Header/>
-<ProductListing/>
+      <ProductListing/>
 
 
     </div>

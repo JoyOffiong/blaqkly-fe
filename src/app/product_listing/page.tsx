@@ -1,7 +1,11 @@
 import Image from "next/image";
 import React from "react";
 import blazer from "@/images/men blazer.webp";
+import { CiHeart } from "react-icons/ci";
+import { TfiComment } from "react-icons/tfi";
+import { IoCartOutline } from "react-icons/io5";
 import blackbag from "@/images/blackbag.png";
+import Link from "next/link";
 
 function ProductListing() {
   return (
@@ -10,7 +14,7 @@ function ProductListing() {
         <div className="md:block hidden">
           <Image
             src={blackbag}
-            width={400}
+            width={600}
             height={150}
             alt="blaqkly logo"
             className="rounded-l-lg"
@@ -33,30 +37,35 @@ function ProductListing() {
           Women
         </span>
       </div>
-      <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
-        <div className="bg-white shadow-md rounded-sm">
-          <div className="w-full flex justify-self-center ">
-            <Image
-              src={blazer}
-              width={240}
-              height={200}
-              alt="blaqkly logo"
-              className="rounded-t"
-            />
-          </div>
-          <div className="p-3">
-            <p className="text-[14px]">Carolina herrera men blazer fit</p>
-            <p className="font-bold text-[15px]">$124</p>
-            <p className="text-gray-600 pb-2 text-[14px]">
-              Size: 38s | Carolina Herrera
-            </p>
-            <hr className="border-gray-400" />
-            <div>
 
+      <Link href="./product_details">
+        <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
+          <div className="bg-white shadow-md rounded-sm">
+            <div className="w-full flex justify-self-center ">
+              <Image
+                src={blazer}
+                width={240}
+                height={200}
+                alt="blaqkly logo"
+                className="rounded-t"
+              />
+            </div>
+            <div className="p-3">
+              <p className="text-[14px]">Carolina herrera men blazer fit</p>
+              <p className="font-bold text-[15px]">$124</p>
+              <p className="text-gray-600 pb-2 text-[14px]">
+                Size: 38s | Carolina Herrera
+              </p>
+              <hr className="border-gray-400" />
+              <div className="pt-3 flex justify-between">
+                <CiHeart />
+                <TfiComment />
+                <IoCartOutline />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

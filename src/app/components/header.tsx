@@ -30,7 +30,7 @@ function Header() {
   }, []);
 
   return (
-    <div>
+    <div className="pb-8">
       <div>
         <div
           className="bg-[#2b2a2a] transition-full duration-300"
@@ -55,28 +55,14 @@ function Header() {
           </div>
         </div>
 
-        <div className="flex justify-between pl-4">
-          <div className="flex gap-4 flex-row items-center">
+        <div className="flex justify-between items-start pl-4">
+          <div className="flex gap-4 pt-2 flex-row items-center">
             <FaFacebookSquare />
             <IoLogoTwitter />
             <AiOutlineInstagram />
             <IoLogoWhatsapp />
           </div>
-          <div className="flex gap-2 items-center">
-            <div className="flex gap-1 items-center">
-              <IoPersonOutline />
-              <p className="font-light text-sm">LOGIN</p>
-            </div>
-
-            <div className="bg-gray-600 text-white flex gap-2 items-center px-4 py-2">
-              <BsCart3 />
-              <p className="font-light">{items}</p>
-            </div>
-          </div>
-        </div>
-
-
-        <div className="flex flex-col  justify-center pb-2">
+          <div className="flex flex-col  justify-center pb-2">
           <div className="flex gap-6 justify-center pb-2">
             <Image
               src={blaqklyLogo}
@@ -93,6 +79,21 @@ function Header() {
             <p>Sale</p>
           </div>
         </div>
+          <div className="flex gap-2 items-center">
+            <div className="flex gap-1 items-center">
+              <IoPersonOutline />
+              <p className="font-light text-sm">LOGIN</p>
+            </div>
+
+            <div className="bg-gray-600 text-white flex gap-2 items-center px-4 py-2">
+              <BsCart3 />
+              <p className="font-light">{items}</p>
+            </div>
+          </div>
+        </div>
+
+
+        
       </div>
 
 
