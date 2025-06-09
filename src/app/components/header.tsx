@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import blaqklyLogo from "@/images/blaqkly2.jpeg";
 import Image from "next/image";
 import { IoPersonOutline } from "react-icons/io5";
+import Link from "next/link";
 
 function Header() {
   const [items, setItems] = useState<number>(0);
@@ -30,7 +31,7 @@ function Header() {
   }, []);
 
   return (
-    <div className="pb-8">
+    <div className="mb-10">
       <div>
         <div
           className="bg-[#2b2a2a] transition-full duration-300"
@@ -55,15 +56,37 @@ function Header() {
           </div>
         </div>
 
-        <div className="flex justify-between items-start pl-4">
-          <div className="flex gap-4 pt-2 flex-row items-center">
+        <div className="flex justify-between pl-4">
+          <div className="flex gap-4 flex-row items-center">
             <FaFacebookSquare />
             <IoLogoTwitter />
             <AiOutlineInstagram />
             <IoLogoWhatsapp />
           </div>
-          <div className="flex flex-col  justify-center pb-2">
-          <div className="flex gap-6 justify-center pb-2">
+          <div className="flex gap-2 items-center">
+
+            <Link href="./log_in">
+             <div className="flex gap-1 items-center">
+              <IoPersonOutline />
+              <p className="font-light text-sm">LOGIN</p>
+            </div>
+            </Link>
+           
+
+    <Link href="../cart">
+     <div className="bg-gray-600 text-white flex gap-2 items-center px-4 py-2">
+              <BsCart3 />
+              <p className="font-light">{items}</p>
+            </div>
+    </Link>
+           
+          </div>
+        </div>
+
+
+        <div className="flex flex-col md:-mt-10 justify-center pb-2">
+          <Link href="./">
+           <div className="flex gap-6 justify-center pb-2">
             <Image
               src={blaqklyLogo}
               width={200}
@@ -71,6 +94,8 @@ function Header() {
               alt="blaqkly logo"
             />
           </div>
+          </Link>
+         
 
           <div className="flex gap-6 justify-center">
             <p>New In</p>
@@ -79,21 +104,6 @@ function Header() {
             <p>Sale</p>
           </div>
         </div>
-          <div className="flex gap-2 items-center">
-            <div className="flex gap-1 items-center">
-              <IoPersonOutline />
-              <p className="font-light text-sm">LOGIN</p>
-            </div>
-
-            <div className="bg-gray-600 text-white flex gap-2 items-center px-4 py-2">
-              <BsCart3 />
-              <p className="font-light">{items}</p>
-            </div>
-          </div>
-        </div>
-
-
-        
       </div>
 
 

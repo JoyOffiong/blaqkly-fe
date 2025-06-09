@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, {useRef, useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import blazer from "@/images/men blazer.webp";
+import Link from 'next/link';
 
 
 function Product_Details() {
@@ -20,6 +21,29 @@ function Product_Details() {
     setSize(event.target.value as string);
   };
 
+    const [isVisible, setIsVisible] = useState(false);
+        const sectionRef = useRef(null);
+   useEffect(() => {
+            const observer = new IntersectionObserver(
+              ([entry]) => {
+                if (entry.isIntersecting) {
+                  setIsVisible(true);
+                }
+              },
+              { threshold: 0.8 }
+            );
+        
+            if (sectionRef.current) {
+              observer.observe(sectionRef.current);
+            }
+        
+            return () => {
+              if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+              }
+            };
+          }, []);
+
   const productDetials=[
   {type:"cloth",image:blazer, cost:"₦53,500.00", title:"BLACK BLAZER- UNISEX", description:"",
     care_instructions:"Machine wash, Hand wash, Dry-clean", category:"Female"
@@ -27,12 +51,14 @@ function Product_Details() {
   ]
 
   return (
-    <div className='max-w-4xl px-8 mx-auto my-16'>
-        
 
+     <div ref={sectionRef} className={`font-inter max-w-4xl px-8 mx-auto my-16 text-left transform transition-all duration-700 ${
+        isVisible ?"opacity-100 translate-y-10": "opacity-0 translate-y-0" 
+      }`} >
+        
 {productDetials.map((details, index)=>{
   const {type, image, cost, title,category, description, care_instructions}= details
-
+ 
   return(
     <div className='flex items-start gap-8 justify-between md:flex-row flex-col' key={index}>
       <div className=''>
@@ -122,9 +148,14 @@ function Product_Details() {
                 <p onClick={()=>{setCount(count+1)}} className='cursor-pointer'>+</p>
             </div>
 
-            <div className='w-1/2 text-center py-2 bg-gray-800 hover:bg-black'>
-                <button className='text-white text-sm font-bold'>ADD TO CART</button>
+           
+             <div className='w-1/2 text-center py-2 bg-gray-800 hover:bg-black'>
+                
+                <button className='text-white text-sm font-bold' >ADD TO CART</button>
+           
             </div>
+            
+           
         </div>
 
         <hr />

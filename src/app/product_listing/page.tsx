@@ -8,6 +8,20 @@ import blackbag from "@/images/blackbag.png";
 import Link from "next/link";
 
 function ProductListing() {
+
+  const products=[
+    {title:"Carolina herrera men blazer fit", price:"$124",
+      sizes: "S-XXL", author:"Carolina Herrera",image: blazer,
+    },
+     {title:"Carolina herrera men blazer fit", price:"$124",
+      sizes: "S-XXL", author:"Carolina Herrera",image: blazer,
+    },
+     {title:"Carolina herrera men blazer fit", price:"$124",
+      sizes: "S-XXL", author:"Carolina Herrera",image: blazer,
+    }
+  ]
+
+
   return (
     <div className="mt-10 mx-4 p-2 border-[1px] rounded-lg border-bg-gray-300 space-y-8">
       <div className="flex flex-row  w-full">
@@ -40,10 +54,14 @@ function ProductListing() {
 
       <Link href="./product_details">
         <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
-          <div className="bg-white shadow-md rounded-sm">
+
+{products.map((product, index)=>{
+  const {image, title, price, author, sizes} = product;
+  return(
+<div className="bg-white shadow-md rounded-sm" key={index}>
             <div className="w-full flex justify-self-center ">
               <Image
-                src={blazer}
+                src={image}
                 width={240}
                 height={200}
                 alt="blaqkly logo"
@@ -51,10 +69,10 @@ function ProductListing() {
               />
             </div>
             <div className="p-3">
-              <p className="text-[14px]">Carolina herrera men blazer fit</p>
-              <p className="font-bold text-[15px]">$124</p>
-              <p className="text-gray-600 pb-2 text-[14px]">
-                Size: 38s | Carolina Herrera
+              <p className="text-[14px]">{title}</p>
+              <p className="font-bold text-[15px]">{price}</p>
+              <p className="text-gray-600 pb-2 text-[12px]">
+                Size: {" "}{sizes} | {author}
               </p>
               <hr className="border-gray-400" />
               <div className="pt-3 flex justify-between">
@@ -64,6 +82,10 @@ function ProductListing() {
               </div>
             </div>
           </div>
+  )
+
+})}
+          
         </div>
       </Link>
     </div>
