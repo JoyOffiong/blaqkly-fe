@@ -1,8 +1,9 @@
 "use client"
 
 import React from 'react'
-import InputBoxComp from '../components/inputField'
+import InputBoxComp from '@/app/components/inputField'
 import { useForm } from 'react-hook-form'
+import Link from 'next/link'
 
 function Login() {
 
@@ -21,7 +22,9 @@ function Login() {
         
 
         <div className='pb-4' >
-          <button className='w-full shadow-md py-3'>Log in with Google</button>
+        
+                    <button className="w-full bg-white shadow-[0px_-4px_10px_rgba(0,0,0,0.3)] py-3">
+Log in with Google</button>
         </div>
 
         <hr className="border-gray-400" />
@@ -45,8 +48,8 @@ function Login() {
 
               <div className='flex justify-between w-full items-center'>
                 <p className='font-bold text-[10px]'>Forgot Password</p>
- <div className="bg-gray-800 cursor-pointer text-white text-center p-2 hover:bg-black rounded-md">
-                          <button type='submit'>Log in</button>
+ <div className="bg-gray-800  text-white text-center p-2 hover:bg-black rounded-md">
+                          <button type='submit' className='cursor-pointer'>Log in</button>
                         </div>
 
               </div>
@@ -54,7 +57,7 @@ function Login() {
 
               <div className='flex items-center gap-2'>
                 <p className='font-bold text-[10px]'>Don't have an account?</p>
-                <p className='text-[14px]'>Sign up</p>
+              <Link href='/pages/sign_up  '><p className='text-[14px]'>Sign up</p></Link>  
               </div>
                        
               </div>

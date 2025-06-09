@@ -10,13 +10,14 @@ import Link from "next/link";
 function ProductListing() {
 
   const products=[
-    {title:"Carolina herrera men blazer fit", price:"$124",
+    {product_id:"1245",
+       name:"Carolina herrera ", price:"$124",
+      sizes: "S-XXL", author:"Carolina Herrera1",image: blazer,
+    },
+     {product_id:"1246",name:"Carolina herrera2 ", price:"$124",
       sizes: "S-XXL", author:"Carolina Herrera",image: blazer,
     },
-     {title:"Carolina herrera men blazer fit", price:"$124",
-      sizes: "S-XXL", author:"Carolina Herrera",image: blazer,
-    },
-     {title:"Carolina herrera men blazer fit", price:"$124",
+     {product_id:"1247",name:"Carolina herrera3", price:"$124",
       sizes: "S-XXL", author:"Carolina Herrera",image: blazer,
     }
   ]
@@ -52,13 +53,14 @@ function ProductListing() {
         </span>
       </div>
 
-      <Link href="./product_details">
+   
         <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
 
 {products.map((product, index)=>{
-  const {image, title, price, author, sizes} = product;
+  const {image, name, price, author, sizes, product_id } = product;
   return(
-<div className="bg-white shadow-md rounded-sm" key={index}>
+       <Link href={`/product_details/${product_id}`} key={index}>
+<div className="bg-white shadow-md rounded-sm" >
             <div className="w-full flex justify-self-center ">
               <Image
                 src={image}
@@ -69,7 +71,7 @@ function ProductListing() {
               />
             </div>
             <div className="p-3">
-              <p className="text-[14px]">{title}</p>
+              <p className="text-[14px]">{name}</p>
               <p className="font-bold text-[15px]">{price}</p>
               <p className="text-gray-600 pb-2 text-[12px]">
                 Size: {" "}{sizes} | {author}
@@ -81,13 +83,12 @@ function ProductListing() {
                 <IoCartOutline />
               </div>
             </div>
-          </div>
+          </div></Link>
   )
 
 })}
           
         </div>
-      </Link>
     </div>
   );
 }

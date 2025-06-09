@@ -3,23 +3,20 @@
 import Image from 'next/image';
 import React, {useRef, useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
+import { useDispatch } from 'react-redux';
+import {addItem} from '@/app/store/cartSlice'
+import { useParams } from 'next/navigation';
 import blazer from "@/images/men blazer.webp";
-import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import SelectBoxComp from '@/app/components/selectField';
 
 
 function Product_Details() {
 
-    const [size, setSize] = useState('');
     const [count, setCount] = useState(0)
-
-  const handleChange = (event:any) => {
-    setSize(event.target.value as string);
-  };
+    const [clicked, setClicked] = useState(false);
+  const params = useParams();
+  const { id } = params;
 
     const [isVisible, setIsVisible] = useState(false);
         const sectionRef = useRef(null);
@@ -44,11 +41,59 @@ function Product_Details() {
             };
           }, []);
 
+ const price = "53500.00"
   const productDetials=[
-  {type:"cloth",image:blazer, cost:"₦53,500.00", title:"BLACK BLAZER- UNISEX", description:"",
+  {type:"cloth",image:blazer, cost:"N53,500.00", title:"BLACK BLAZER- UNISEX", description:"",
     care_instructions:"Machine wash, Hand wash, Dry-clean", category:"Female"
   }
   ]
+const {control, handleSubmit } = useForm()
+
+const dispatch = useDispatch();
+
+ function submit(data:any){
+  if (count ===0){
+    alert('Kindly indicate quantity required')
+    return
+  }
+setClicked(!clicked)
+ dispatch(addItem({
+      product_id: id?.toString(),
+      size:data.size,
+      name: "BLACK BLAZER- UNISEX" ,
+      price: Number(price) ,
+      quantity: count,
+    }));
+    // const data={  product_id: id, size:"medium", price:'53,400', quantity: count}
+    console.log(data)
+
+    }
+
+     useEffect(() => {
+    if (count === 0 ) {
+      setClicked(false); 
+    }
+  }, [count]);
+
+
+const clothSizes= [
+  {value:"S", label:"S"},
+  {value:"M", label:"M"},
+  {value:"L", label:"L"},
+  {value:"XL", label:"XL"},
+  {value:"XXL", label:"XXL"},
+
+]
+
+const shoeSizes= [
+  {value:"37", label:"37"},
+  {value:"38", label:"38"},
+  {value:"39", label:"39"},
+  {value:"40", label:"40"},
+  {value:"41", label:"41"},
+  {value:"42", label:"42"},
+
+]
 
   return (
 
@@ -65,7 +110,8 @@ function Product_Details() {
           <Image alt="bag" src={image} width={500} height={600}/>  
       </div>
 
-      <div className=' w-full md:px-0 px-4 space-y-4 md:w-1/2'>
+        <form action="" onSubmit={handleSubmit(submit)}>
+ <div className=' w-full md:px-0 px-4 space-y-4 md:w-1/2'>
         <p className='font-light'>{title}</p>
             <hr className='text-gray-200'/>
 
@@ -93,22 +139,9 @@ function Product_Details() {
     },
     minHeight: 10,
   }}>
-      <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label" className='text-[#8793a6] text-sm'>Choose a Size</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={size}
-          label="Size"
-          onChange={handleChange}
-        >
-          <MenuItem value={"s"}>Small</MenuItem>
-          <MenuItem value={"m"}>Medium</MenuItem>
-          <MenuItem value={"l"}>Large</MenuItem>
-          <MenuItem value={"xl"}>Extra-large</MenuItem>
-          <MenuItem value={"xxl"}>Extra-extra-large</MenuItem>
-        </Select>
-      </FormControl>
+
+   <SelectBoxComp data={clothSizes} label="Size" name="size" control={control} />
+    
            </Box>):(
               <Box sx={{
     minWidth: {
@@ -118,24 +151,8 @@ function Product_Details() {
     },
     minHeight: 10,
   }}>
-      <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label" className='text-[#8793a6] text-sm'>Choose a Size</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={size}
-          label="Size"
-          onChange={handleChange}
-        >
-          <MenuItem value="37">37</MenuItem>
-          <MenuItem value="38">38</MenuItem>
-          <MenuItem value="39">39</MenuItem>
-          <MenuItem value="40">40</MenuItem>
-          <MenuItem value="41">41</MenuItem>
-          <MenuItem value="42">42</MenuItem>
-          <MenuItem value="43">43</MenuItem>
-        </Select>
-      </FormControl>
+        <SelectBoxComp data={shoeSizes} label="Size" name="size" control={control} />
+
            </Box>
            )}
             
@@ -149,9 +166,12 @@ function Product_Details() {
             </div>
 
            
-             <div className='w-1/2 text-center py-2 bg-gray-800 hover:bg-black'>
+             <div className=' text-center'>
                 
-                <button className='text-white text-sm font-bold' >ADD TO CART</button>
+                <button className={`text-white text-sm font-bold py-3 px-6 ${
+          clicked ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-800 hover:bg-black'
+        }`} type='submit'         disabled={clicked}
+  >ADD TO CART</button>
            
             </div>
             
@@ -166,6 +186,8 @@ function Product_Details() {
             <p>Tags: <span className='text-black'>black, Unisex, Lagos Fashion </span> </p>
         </div>
       </div>
+        </form>
+     
     </div>
   )
 })}

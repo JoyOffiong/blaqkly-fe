@@ -4,13 +4,13 @@ import { X } from "lucide-react";
 import { IoLogoTwitter } from "react-icons/io5";
 import { FaFacebookSquare } from "react-icons/fa";
 import { BsCart3 } from "react-icons/bs";
-import { AiOutlineInstagram } from "react-icons/ai";
-import { IoLogoWhatsapp } from "react-icons/io5";
+import {useSelector} from 'react-redux'
 import React, { useEffect, useState } from "react";
 import blaqklyLogo from "@/images/blaqkly2.jpeg";
 import Image from "next/image";
 import { IoPersonOutline } from "react-icons/io5";
 import Link from "next/link";
+import { RootState } from "../store/store";
 
 function Header() {
   const [items, setItems] = useState<number>(0);
@@ -23,12 +23,16 @@ function Header() {
       setShowScrolledHeader(!showScrolledHeader);
 
   } ;
-      console.log(showScrolledHeader)
     };
+
+    
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const itemsCount =useSelector((state:RootState )=> state.cart.items)
+  
 
   return (
     <div className="mb-10">
@@ -56,27 +60,25 @@ function Header() {
           </div>
         </div>
 
-        <div className="flex justify-between pl-4">
-          <div className="flex gap-4 flex-row items-center">
+        <div className="  ">
+          {/* <div className="flex gap-4 flex-row items-center">
             <FaFacebookSquare />
             <IoLogoTwitter />
             <AiOutlineInstagram />
             <IoLogoWhatsapp />
-          </div>
-          <div className="flex gap-2 items-center">
+          </div> */}
+          <div className="flex gap-2 justify-end items-center">
 
-            <Link href="./log_in">
-             <div className="flex gap-1 items-center">
+            <Link href="/log_in" className="flex gap-1 items-center">
               <IoPersonOutline />
-              <p className="font-light text-sm">LOGIN</p>
-            </div>
+              <p className="font-light text-sm">LOGIN</p>           
             </Link>
            
 
-    <Link href="../cart">
+   <Link href="/cart">
      <div className="bg-gray-600 text-white flex gap-2 items-center px-4 py-2">
               <BsCart3 />
-              <p className="font-light">{items}</p>
+              <p className="font-light ">{itemsCount.length}</p>
             </div>
     </Link>
            
@@ -84,7 +86,7 @@ function Header() {
         </div>
 
 
-        <div className="flex flex-col md:-mt-10 justify-center pb-2">
+        <div className="flex flex-col md:-mt-5 justify-center pb-2">
           <Link href="./">
            <div className="flex gap-6 justify-center pb-2">
             <Image
@@ -97,12 +99,12 @@ function Header() {
           </Link>
          
 
-          <div className="flex gap-6 justify-center">
+          {/* <div className="flex gap-6 justify-center">
             <p>New In</p>
             <p>shop</p>
             <p>Brand</p>
             <p>Sale</p>
-          </div>
+          </div> */}
         </div>
       </div>
 

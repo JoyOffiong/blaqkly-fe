@@ -4,9 +4,15 @@ import React, { useState } from "react";
 import blazer from "@/images/men blazer.webp";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector, UseSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
 
 function Cart() {
   const [count, setCount] = useState(0);
+
+  const items = useSelector((state: RootState) =>
+    console.log(state.cart.items)
+  );
 
   return (
     <div className="space-y-8">
@@ -15,35 +21,28 @@ function Cart() {
       </div>
 
       <div className="flex flex-col px-4 md:px-0 md:flex-row justify-between gap-16  max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between gap-8 w-full">
-          <div className=" w-1/2 space-y-6 gap-4">
-            <p className="text-[10px] ">PRODUCT</p>
-            <div className="flex gap-4 items-center">
-              <div>
-                <Image src={blazer} alt="image" width={100} height={500} />
-              </div>
-              <p className="font-light text-[12px]">BLACK BLAZER- UNISEX</p>
+        <div className=" w-full">
+          <div className="flex flex-col md:flex-row justify-between gap-8 w-full">
+            <div className="w-full md:w-1/2 gap-4">
+              <p className="text-[10px]">PRODUCT</p>
+            </div>
+
+            <div className="flex justify-between w-full items-start flex-row gap-4 text-[10px]">
+              <p>PRICE</p>
+              <p>QUANTITY</p>
+              <p>SUBTOTAL</p>
             </div>
           </div>
 
-          <div className="flex justify-between w-1/2 items-start flex-row gap-4 text-[10px]">
-            <div className="space-y-4 md:space-y-16">
-              <p className="">PRICE</p>
-              <p className="text-[12px]">53,400.00</p>
-            </div>
 
-            <div className="space-y-4 md:space-y-16 text-[10px]">
-              <p>QUANTITY</p>
-              <div className="border-1 justify-center text-[12px] p-1 text-center flex gap-2 items-center">
-                
-                <p >{count}</p>
 
+          <div className="flex flex-col md:flex-row justify-between gap-8 w-full">
+            <div className="w-full md:w-1/2 space-y-6 gap-4">
+              <div className="flex flex-row items-center gap-2">
+                <Image src={blazer} alt="image" width={100} height={500} />
+
+                <p className="font-light text-[12px]">BLACK BLAZER- UNISEX</p>
               </div>
-            </div>
-
-            <div className="text-[10px] space-y-4 md:space-y-16">
-              <p>SUBTOTAL</p>
-              <p className="font-bold text-[12px]">₦53,500.00</p>
             </div>
           </div>
         </div>
@@ -68,12 +67,11 @@ function Cart() {
               <p>N53,400</p>
             </div>
 
-          <Link href='./checkout'>
-          <div className="bg-gray-800 text-white text-center  hover:bg-black w-full py-2">
-              <button className="cursor-pointer">Proceed to Checkout</button>
-            </div>
-          </Link>
-            
+            <Link href="./checkout">
+              <div className="bg-gray-800 text-white text-center  hover:bg-black w-full py-2">
+                <button className="cursor-pointer">Proceed to Checkout</button>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
