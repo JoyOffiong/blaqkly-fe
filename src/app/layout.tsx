@@ -1,12 +1,15 @@
 "use client"
 
 import type { Metadata } from "next";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,14 +27,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+const pathname = usePathname();
+
+  const hideHeaderPaths = ["/", "/sign_up", "/log_in"];
+
+  const shouldHideHeader = hideHeaderPaths.includes(pathname);
+
+return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       ><Provider store={store}> 
                 <PersistGate loading={null} persistor={persistor}>
-        <Header/>
-      <main>
+ {!shouldHideHeader && <Header />}
+       <main>
         
 
           {children} 

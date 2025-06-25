@@ -52,7 +52,7 @@ export default function SelectBoxComp({
             }}
           >
             {data?.map((option, dataIndex) => (
-              <MenuItem key={dataIndex} value={option.value}>
+              <MenuItem className="text-left" key={dataIndex} value={option.value}>
                 {option.label}
               </MenuItem>
             ))}

@@ -43,7 +43,7 @@ function Product_Details() {
 
  const price = "53500.00"
   const productDetials=[
-  {type:"cloth",image:blazer, cost:"N53,500.00", title:"BLACK BLAZER- UNISEX", description:"",
+  {type:"cloth",image:blazer, cost:"N53,500.00", name:"BLACK BLAZER- UNISEX", description:"",
     care_instructions:"Machine wash, Hand wash, Dry-clean", category:"Female"
   }
   ]
@@ -102,7 +102,7 @@ const shoeSizes= [
       }`} >
         
 {productDetials.map((details, index)=>{
-  const {type, image, cost, title,category, description, care_instructions}= details
+  const {type, image, cost, name, category, description, care_instructions}= details
  
   return(
     <div className='flex items-start gap-8 justify-between md:flex-row flex-col' key={index}>
@@ -112,7 +112,7 @@ const shoeSizes= [
 
         <form action="" onSubmit={handleSubmit(submit)}>
  <div className=' w-full md:px-0 px-4 space-y-4 md:w-1/2'>
-        <p className='font-light'>{title}</p>
+        <p className='font-light'>{name}</p>
             <hr className='text-gray-200'/>
 
         <div className='space-y-4'>

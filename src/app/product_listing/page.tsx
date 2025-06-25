@@ -9,42 +9,45 @@ import Link from "next/link";
 
 function ProductListing() {
 
-  const products=[
-    {product_id:"1245",
-       name:"Carolina herrera ", price:"$124",
-      sizes: "S-XXL", author:"Carolina Herrera1",image: blazer,
-    },
-     {product_id:"1246",name:"Carolina herrera2 ", price:"$124",
-      sizes: "S-XXL", author:"Carolina Herrera",image: blazer,
-    },
-     {product_id:"1247",name:"Carolina herrera3", price:"$124",
-      sizes: "S-XXL", author:"Carolina Herrera",image: blazer,
-    }
-  ]
 
+
+  const products = [
+    {
+      product_id: "1245",
+      name: "Carolina herrera ",
+      price: "$124",
+      sizes: "S-XXL",
+      author: "Carolina Herrera1",
+      image: blazer,
+    },
+    {
+      product_id: "1246",
+      name: "Carolina herrera2 ",
+      price: "$124",
+      sizes: "S-XXL",
+      author: "Carolina Herrera",
+      image: blazer,
+    },
+    {
+      product_id: "1247",
+      name: "Carolina herrera3",
+      price: "$124",
+      sizes: "S-XXL",
+      author: "Carolina Herrera",
+      image: blazer,
+    },
+  ];
+
+
+  const createProduct=()=>{
+        console.log("data")
+  }
 
   return (
     <div className="mt-10 mx-4 p-2 border-[1px] rounded-lg border-bg-gray-300 space-y-8">
-      <div className="flex flex-row  w-full">
-        <div className="md:block hidden">
-          <Image
-            src={blackbag}
-            width={600}
-            height={150}
-            alt="blaqkly logo"
-            className="rounded-l-lg"
-          />
-        </div>
-
-        <div className="bg-[#2b2a2a] w-full md:rounded-l-none rounded-l-lg rounded-r-lg   flex justify-center items-center">
-          <div className="space-y-4 text-center md:p-0 py-4">
-            <p className="text-2xl text-white">Blaqkly Women</p>
-            <button className="bg-gray-500 py-2 px-3 text-white rounded-md">
-              Follow
-            </button>
-          </div>
-        </div>
-      </div>
+   
+        <button className="bg-gray-800 cursor-pointer flex justify-end items-end text-white text-center p-2 hover:bg-black rounded-md" type="submit" onClick={()=>createProduct()}>Create Account</button>
+     
 
       {/* women */}
       <div>
@@ -53,42 +56,39 @@ function ProductListing() {
         </span>
       </div>
 
-   
-        <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
-
-{products.map((product, index)=>{
-  const {image, name, price, author, sizes, product_id } = product;
-  return(
-       <Link href={`/product_details/${product_id}`} key={index}>
-<div className="bg-white shadow-md rounded-sm" >
-            <div className="w-full flex justify-self-center ">
-              <Image
-                src={image}
-                width={240}
-                height={200}
-                alt="blaqkly logo"
-                className="rounded-t"
-              />
-            </div>
-            <div className="p-3">
-              <p className="text-[14px]">{name}</p>
-              <p className="font-bold text-[15px]">{price}</p>
-              <p className="text-gray-600 pb-2 text-[12px]">
-                Size: {" "}{sizes} | {author}
-              </p>
-              <hr className="border-gray-400" />
-              <div className="pt-3 flex justify-between">
-                <CiHeart />
-                <TfiComment />
-                <IoCartOutline />
+      <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
+        {products.map((product, index) => {
+          const { image, name, price, author, sizes, product_id } = product;
+          return (
+            <Link href={`/product_details/${product_id}`} key={index}>
+              <div className="bg-white shadow-md rounded-sm">
+                <div className="w-full flex justify-self-center ">
+                  <Image
+                    src={image}
+                    width={240}
+                    height={200}
+                    alt="blaqkly logo"
+                    className="rounded-t"
+                  />
+                </div>
+                <div className="p-3">
+                  <p className="text-[14px]">{name}</p>
+                  <p className="font-bold text-[15px]">{price}</p>
+                  <p className="text-gray-600 pb-2 text-[12px]">
+                    Size: {sizes} | {author}
+                  </p>
+                  <hr className="border-gray-400" />
+                  <div className="pt-3 flex justify-between">
+                    <CiHeart />
+                    <TfiComment />
+                    <IoCartOutline />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div></Link>
-  )
-
-})}
-          
-        </div>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

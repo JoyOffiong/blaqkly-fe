@@ -11,6 +11,7 @@ function Login() {
   
   function submit(data:any){
         console.log(data)
+    window.location.href="http://localhost:3000/product_listing"
   }
 
 
@@ -49,7 +50,7 @@ Log in with Google</button>
               <div className='flex justify-between w-full items-center'>
                 <p className='font-bold text-[10px]'>Forgot Password</p>
  <div className="bg-gray-800  text-white text-center p-2 hover:bg-black rounded-md">
-                          <button type='submit' className='cursor-pointer'>Log in</button>
+                          <button type='submit' className='cursor-pointer' >Log in</button>
                         </div>
 
               </div>
