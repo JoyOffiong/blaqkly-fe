@@ -1,11 +1,16 @@
+"use client"
+
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import blazer from "@/images/men blazer.webp";
 import { CiHeart } from "react-icons/ci";
 import { TfiComment } from "react-icons/tfi";
 import { IoCartOutline } from "react-icons/io5";
 import blackbag from "@/images/blackbag.png";
 import Link from "next/link";
+import Button from '@mui/material/Button';
+import AddProduct from "../components/modals/addProduct";
+
 
 function ProductListing() {
 
@@ -38,22 +43,25 @@ function ProductListing() {
     },
   ];
 
+const [showModal, setShowModal ] = useState<boolean>(false)
 
-  const createProduct=()=>{
-        console.log("data")
-  }
+const handleClose =()=>{setShowModal(false)}
 
   return (
-    <div className="mt-10 mx-4 p-2 border-[1px] rounded-lg border-bg-gray-300 space-y-8">
+    <>
+     <div className="mt-10 mx-4 p-2 rounded-lg  space-y-8">
    
-        <button className="bg-gray-800 cursor-pointer flex justify-end items-end text-white text-center p-2 hover:bg-black rounded-md" type="submit" onClick={()=>createProduct()}>Create Account</button>
+   <div className="flex justify-end">
+   <Button variant="outlined" onClick={()=>setShowModal(true)}>Add Product</Button>
+   </div>
+     
      
 
       {/* women */}
       <div>
-        <span className="bg-gray-500 text-white rounded-2xl px-4 py-2 ">
+        {/* <span className="bg-gray-500 text-white rounded-2xl px-4 py-2 ">
           Women
-        </span>
+        </span> */}
       </div>
 
       <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
@@ -61,8 +69,8 @@ function ProductListing() {
           const { image, name, price, author, sizes, product_id } = product;
           return (
             <Link href={`/product_details/${product_id}`} key={index}>
-              <div className="bg-white shadow-md rounded-sm">
-                <div className="w-full flex justify-self-center ">
+              <div className="bg-white shadow-lg border-gray-300 border-1  rounded-sm">
+                {/* <div className="w-full flex justify-self-center ">
                   <Image
                     src={image}
                     width={240}
@@ -70,7 +78,7 @@ function ProductListing() {
                     alt="blaqkly logo"
                     className="rounded-t"
                   />
-                </div>
+                </div> */}
                 <div className="p-3">
                   <p className="text-[14px]">{name}</p>
                   <p className="font-bold text-[15px]">{price}</p>
@@ -90,6 +98,10 @@ function ProductListing() {
         })}
       </div>
     </div>
+{showModal && <AddProduct handleClose={handleClose} open = {showModal}/>}
+
+    </>
+   
   );
 }
 

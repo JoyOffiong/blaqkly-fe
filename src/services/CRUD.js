@@ -18,6 +18,6 @@ async function Create_Product(data){
     }
 }
 
-export default ProductAPIs ={
+export default const ProductAPIs ={
     Create_Product
 }
