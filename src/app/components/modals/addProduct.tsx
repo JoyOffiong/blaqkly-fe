@@ -1,4 +1,6 @@
-import React from "react";
+"use client"
+
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import MuiModal from "@mui/material/Modal";
@@ -6,25 +8,45 @@ import { Style } from "../style";
 import { useForm } from "react-hook-form";
 import InputBoxComp from "../inputField";
 import SelectBoxComp from "../selectField";
-import { Button } from "@mui/material";
+import ProductAPIs from "../../../services/CRUD";
+import {  CircularProgress } from "@mui/material";
+
 
 type props = {
   handleClose: () => void;
   open: boolean;
-};
-export default function AddProduct({handleClose, open}: props) {
+  fetchProducts: ()=>void
+  edit?: boolean
+  setShowSuccessModal:(arg0: boolean)=>void;
+}
 
-  const { control, handleSubmit} = useForm()
+export default function AddProduct({fetchProducts, handleClose, open,edit, setShowSuccessModal}: props) {
+
+  const { control, handleSubmit, reset} = useForm()
+  const [loading, setLoading] = useState(false)
 
 const category =[{value:"Female", label:"Female"}, {value:"Male", label:"Male"}]
 const type =[{value:"Cloth", label:"Cloth"}, {value:"Shoe", label:"Shoe"}]
 
 
   const addProduct=(data:any)=>{
-    
-    ProductAPIs.Create_Product(data)
+    setLoading(true)
+    ProductAPIs.Create_Product(data).then((res)=>{
+      setLoading(false)
+      handleClose()
+      setShowSuccessModal(true)
+      fetchProducts()
+      return res
+    })
+    .catch((err)=>{throw err})
   }
 
+
+  useEffect(()=>{
+    if(edit){
+
+    }
+  },[])
 
 
   return (
@@ -44,6 +66,8 @@ const type =[{value:"Cloth", label:"Cloth"}, {value:"Shoe", label:"Shoe"}]
               <div className="flex gap-4 flex-col mb-4">
              <InputBoxComp control={control} name="name" type="text" label="Enter Name"/>
                <InputBoxComp control={control} name="price" type="number" label="Enter Price" />
+
+               {/* This should be a dropdown with sizes, and when I select one, it should come up as a selected field, multi-select implementation */}
               <InputBoxComp control={control} name="sizes" type="text" label=" Enter Sizes Available"/>
              <InputBoxComp control={control} name="designer" type="text" label="designer"/>
             <SelectBoxComp control={control} name="category" data={category} label="Category" />
@@ -54,8 +78,10 @@ const type =[{value:"Cloth", label:"Cloth"}, {value:"Shoe", label:"Shoe"}]
 
               </div>
                
-    <div >
-  <Button variant="outlined">Submit</Button>
+    <div className="bg-gray-800 cursor-pointer text-white text-center p-2 hover:bg-black rounded-md">
+                 <button type="submit">
+                 {loading ? <CircularProgress size={24} /> : "Add Product"}{" "}
+               </button>
     </div>
             
 

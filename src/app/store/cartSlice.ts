@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CartItem{
     product_id: string | undefined;
-    name: string;
+    name: string | undefined;
     quantity: number;
     size: string;
     price: number;

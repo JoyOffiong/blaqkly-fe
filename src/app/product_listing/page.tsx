@@ -1,51 +1,59 @@
 "use client"
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import blazer from "@/images/men blazer.webp";
 import { CiHeart } from "react-icons/ci";
 import { TfiComment } from "react-icons/tfi";
 import { IoCartOutline } from "react-icons/io5";
-import blackbag from "@/images/blackbag.png";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import Link from "next/link";
 import Button from '@mui/material/Button';
 import AddProduct from "../components/modals/addProduct";
+import Modal from "../components/modal";
+import ProductAPIs from "@/services/CRUD";
+import { Delete } from "lucide-react";
 
 
 function ProductListing() {
 
+  const [products, setProducts] = useState([])
 
+  const fetchProducts  = ()=>{ProductAPIs. Fetch_Products().then((res)=> 
+ setProducts(res))}
 
-  const products = [
-    {
-      product_id: "1245",
-      name: "Carolina herrera ",
-      price: "$124",
-      sizes: "S-XXL",
-      author: "Carolina Herrera1",
-      image: blazer,
-    },
-    {
-      product_id: "1246",
-      name: "Carolina herrera2 ",
-      price: "$124",
-      sizes: "S-XXL",
-      author: "Carolina Herrera",
-      image: blazer,
-    },
-    {
-      product_id: "1247",
-      name: "Carolina herrera3",
-      price: "$124",
-      sizes: "S-XXL",
-      author: "Carolina Herrera",
-      image: blazer,
-    },
-  ];
+  useEffect(()=>{
+ fetchProducts()
+  },[])
 
 const [showModal, setShowModal ] = useState<boolean>(false)
+const [showSuccessModal, setShowSuccessModal ] = useState<boolean>(false)
+const [deleteSucccessModal, setDeleteSucccessModal] = useState<boolean>(false)
+const [edit, setEdit] = useState<boolean>(false)
 
 const handleClose =()=>{setShowModal(false)}
+const closeSuccessModal =()=>{setShowSuccessModal(false)}
+
+const deleteProduct=(id:number)=>{
+   ProductAPIs.DeleteProduct(id).then((res)=>{
+    setDeleteSucccessModal(true)
+    console.log(res)
+    return res;
+   })
+}
+
+const editModal=()=>{
+
+}
+
+
+const closeDeleteSuccessModal =()=>{
+  setDeleteSucccessModal(false)
+  fetchProducts()
+}
+
+
 
   return (
     <>
@@ -66,10 +74,11 @@ const handleClose =()=>{setShowModal(false)}
 
       <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
         {products.map((product, index) => {
-          const { image, name, price, author, sizes, product_id } = product;
+          const { designer, name, price, sizes, product_id } = product;
           return (
-            <Link href={`/product_details/${product_id}`} key={index}>
-              <div className="bg-white shadow-lg border-gray-300 border-1  rounded-sm">
+            <div className="bg-white shadow-lg border-gray-300 border-1  rounded-sm" key={index} >
+              <Link href={`/product_details/${product_id}`} >
+              <div >
                 {/* <div className="w-full flex justify-self-center ">
                   <Image
                     src={image}
@@ -79,27 +88,39 @@ const handleClose =()=>{setShowModal(false)}
                     className="rounded-t"
                   />
                 </div> */}
-                <div className="p-3">
+                <div className="pt-3 px-3">
                   <p className="text-[14px]">{name}</p>
                   <p className="font-bold text-[15px]">{price}</p>
                   <p className="text-gray-600 pb-2 text-[12px]">
-                    Size: {sizes} | {author}
+                    Size: {sizes} | {designer}
                   </p>
                   <hr className="border-gray-400" />
-                  <div className="pt-3 flex justify-between">
+                  <div className="py-3 flex justify-between">
                     <CiHeart />
                     <TfiComment />
                     <IoCartOutline />
                   </div>
+      
+        <hr className="border-gray-400" />
+                  
                 </div>
               </div>
             </Link>
+            <div  className="p-3 flex justify-end gap-x-8">
+                    
+                    <MdDelete className="cursor-pointer" onClick={()=>deleteProduct(product_id)}/>
+                      <FaRegEdit className="cursor-pointer" onClick={()=>setEdit(true)}/>
+                  </div>
+            </div>
+          
           );
         })}
       </div>
     </div>
-{showModal && <AddProduct handleClose={handleClose} open = {showModal}/>}
-
+{showModal && <AddProduct handleClose={handleClose} open = {showModal} setShowSuccessModal={setShowSuccessModal} fetchProducts={fetchProducts}/>}
+{showSuccessModal && <Modal handleClose={closeSuccessModal} open = {showSuccessModal} text="Product Added Successfully"/>}
+{deleteSucccessModal && <Modal handleClose={closeDeleteSuccessModal} open={deleteSucccessModal}  text="Product Deleted Successfully"/> }
+{edit && <AddProduct handleClose={handleClose} open = {showModal} setShowSuccessModal={setShowSuccessModal} fetchProducts={fetchProducts} edit={edit}/>}
     </>
    
   );
