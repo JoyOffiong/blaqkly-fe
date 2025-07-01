@@ -13,18 +13,8 @@ import ProductAPIs from "@/services/CRUD";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { productDetail } from "@/model/productModel";
 
-type productDetail = {
-  name: string | undefined;
-  image: string | null;
-  description: string;
-  category: string;
-  sizes: string;
-  price: number;
-  type: string;
-  designer: string;
-  care_instructions: string;
-};
 
 function Product_Details() {
   const [count, setCount] = useState(0);

@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import blazer from "@/images/men blazer.webp";
 import { CiHeart } from "react-icons/ci";
 import { TfiComment } from "react-icons/tfi";
+import {productDetail} from "../../model/productModel";
 import { IoCartOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -13,7 +14,6 @@ import Button from '@mui/material/Button';
 import AddProduct from "../components/modals/addProduct";
 import Modal from "../components/modal";
 import ProductAPIs from "@/services/CRUD";
-import { Delete } from "lucide-react";
 
 
 function ProductListing() {
@@ -28,6 +28,7 @@ function ProductListing() {
   },[])
 
 const [showModal, setShowModal ] = useState<boolean>(false)
+const [showEditModal, setShowEditModal] = useState<boolean>(false)
 const [showSuccessModal, setShowSuccessModal ] = useState<boolean>(false)
 const [deleteSucccessModal, setDeleteSucccessModal] = useState<boolean>(false)
 const [edit, setEdit] = useState<boolean>(false)
@@ -43,8 +44,21 @@ const deleteProduct=(id:number)=>{
    })
 }
 
-const editModal=()=>{
+  const [editThis, setEditThis] = useState<productDetail>()
+  const [editThisId, setEditThisId]= useState<number>()
 
+function editModal(id:number){
+  setEditThisId(id)
+  setEdit(true)
+  setShowEditModal(true)
+
+ const selectedProduct = products.find((item:productDetail)=>item?.product_id === id )
+
+  setEditThis(selectedProduct)
+}
+
+const closeEditModal =()=>{
+  setShowEditModal(false)
 }
 
 
@@ -75,6 +89,7 @@ const closeDeleteSuccessModal =()=>{
       <div className="my-10 mx-2 md:mx-15 gap-10 grid md:grid-cols-4 lg:grid-cols-5">
         {products.map((product, index) => {
           const { designer, name, price, sizes, product_id } = product;
+         
           return (
             <div className="bg-white shadow-lg border-gray-300 border-1  rounded-sm" key={index} >
               <Link href={`/product_details/${product_id}`} >
@@ -108,8 +123,9 @@ const closeDeleteSuccessModal =()=>{
             </Link>
             <div  className="p-3 flex justify-end gap-x-8">
                     
-                    <MdDelete className="cursor-pointer" onClick={()=>deleteProduct(product_id)}/>
-                      <FaRegEdit className="cursor-pointer" onClick={()=>setEdit(true)}/>
+      <MdDelete className="cursor-pointer" onClick={()=>deleteProduct(product_id)}/>
+       <FaRegEdit className="cursor-pointer" 
+                      onClick={()=>editModal(product_id)}/>
                   </div>
             </div>
           
@@ -118,9 +134,9 @@ const closeDeleteSuccessModal =()=>{
       </div>
     </div>
 {showModal && <AddProduct handleClose={handleClose} open = {showModal} setShowSuccessModal={setShowSuccessModal} fetchProducts={fetchProducts}/>}
-{showSuccessModal && <Modal handleClose={closeSuccessModal} open = {showSuccessModal} text="Product Added Successfully"/>}
+{showSuccessModal && <Modal handleClose={closeSuccessModal} open = {showSuccessModal} text={`${edit=== true ?"Product Updated Successfully": "Product Added Successfully" }`}/>}
 {deleteSucccessModal && <Modal handleClose={closeDeleteSuccessModal} open={deleteSucccessModal}  text="Product Deleted Successfully"/> }
-{edit && <AddProduct handleClose={handleClose} open = {showModal} setShowSuccessModal={setShowSuccessModal} fetchProducts={fetchProducts} edit={edit}/>}
+{showEditModal && <AddProduct editThisId={editThisId} handleClose={closeEditModal} open = {showEditModal} setShowSuccessModal={setShowSuccessModal} fetchProducts={fetchProducts} edit={edit} editThis={editThis}/>}
     </>
    
   );

@@ -10,6 +10,7 @@ import InputBoxComp from "../inputField";
 import SelectBoxComp from "../selectField";
 import ProductAPIs from "../../../services/CRUD";
 import {  CircularProgress } from "@mui/material";
+import { productDetail } from "@/model/productModel";
 
 
 type props = {
@@ -17,21 +18,25 @@ type props = {
   open: boolean;
   fetchProducts: ()=>void
   edit?: boolean
+  editThisId?: number,
+  editThis?: productDetail
   setShowSuccessModal:(arg0: boolean)=>void;
 }
 
-export default function AddProduct({fetchProducts, handleClose, open,edit, setShowSuccessModal}: props) {
+export default function AddProduct({editThisId, fetchProducts, handleClose,editThis, open,edit, setShowSuccessModal}: props) {
 
   const { control, handleSubmit, reset} = useForm()
   const [loading, setLoading] = useState(false)
 
-const category =[{value:"Female", label:"Female"}, {value:"Male", label:"Male"}]
+  const category =[{value:"Female", label:"Female"}, {value:"Male", label:"Male"}]
 const type =[{value:"Cloth", label:"Cloth"}, {value:"Shoe", label:"Shoe"}]
 
 
   const addProduct=(data:any)=>{
     setLoading(true)
-    ProductAPIs.Create_Product(data).then((res)=>{
+
+    if(!edit){
+   ProductAPIs.Create_Product(data).then((res)=>{
       setLoading(false)
       handleClose()
       setShowSuccessModal(true)
@@ -39,12 +44,37 @@ const type =[{value:"Cloth", label:"Cloth"}, {value:"Shoe", label:"Shoe"}]
       return res
     })
     .catch((err)=>{throw err})
+    return
+    }
+    if(editThisId !== undefined){
+  ProductAPIs.updateProduct(editThisId, data).then((res)=>{
+      if(res){
+        
+       setLoading(false)
+      handleClose()
+      setShowSuccessModal(true)
+      fetchProducts()
+      }
+    })
+    }
+  
+ 
   }
 
 
   useEffect(()=>{
     if(edit){
+      reset({
+        name: editThis?.name,
+        price: editThis?.price,
+        sizes: editThis?.sizes,
+        designer:editThis?.designer,
+        category: editThis?.category,
+        care_instructions: editThis?.care_instructions,
+        type: editThis?.type,
+        description: editThis?.description
 
+      })
     }
   },[])
 
@@ -58,10 +88,10 @@ const type =[{value:"Cloth", label:"Cloth"}, {value:"Shoe", label:"Shoe"}]
        >
          <Box sx={Style}>
            <Typography id="modal-modal-title" variant="h6" component="h4">
-            Add a Product
+           {edit === true ? "Update Product": "Add a Product"} 
            </Typography>
            
-           <div className="mt-4">
+           <div className="mt-8">
             <form onSubmit={handleSubmit(addProduct)} >
               <div className="flex gap-4 flex-col mb-4">
              <InputBoxComp control={control} name="name" type="text" label="Enter Name"/>
@@ -80,7 +110,7 @@ const type =[{value:"Cloth", label:"Cloth"}, {value:"Shoe", label:"Shoe"}]
                
     <div className="bg-gray-800 cursor-pointer text-white text-center p-2 hover:bg-black rounded-md">
                  <button type="submit">
-                 {loading ? <CircularProgress size={24} /> : "Add Product"}{" "}
+                 {loading ? <CircularProgress size={24} /> : edit=== true ? "Update" : "Add"}
                </button>
     </div>
             
