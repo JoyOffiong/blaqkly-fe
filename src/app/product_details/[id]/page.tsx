@@ -14,11 +14,15 @@ import Link from "next/link";
 import { productDetail } from "@/model/productModel";
 
 
+type RouteParams = {
+  id: string | any;
+};
+
 function Product_Details() {
   const [count, setCount] = useState(0);
   const [clicked, setClicked] = useState(false);
 
-  const params = useParams();
+  const params = useParams<RouteParams>();
   const { id } = params;
 
   const [isVisible, setIsVisible] = useState(false);
