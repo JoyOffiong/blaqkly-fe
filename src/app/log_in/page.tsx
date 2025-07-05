@@ -1,17 +1,61 @@
 "use client"
 
-import React from 'react'
-import InputBoxComp from '@/app/components/inputField'
-import { useForm } from 'react-hook-form'
-import Link from 'next/link'
+import React, { useState } from 'react';
+import InputBoxComp from '@/app/components/inputField';
+import { set, useForm } from 'react-hook-form';
+import Link from 'next/link';
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import auth from "../../services/authentication";
+import { useDispatch } from 'react-redux'
+import { CircularProgress } from '@mui/material'
+import { addUser } from '../store/userSlice'
+import { AppDispatch } from '../store/store'
+
 
 function Login() {
 
   const {control, handleSubmit } = useForm()
-  
+  const [loading, setLoading] = useState<boolean>(false)
+
+      const success = () => toast("Login Successfull!");
+      const failed = () => toast("Invalid Credentials!");
+
+        const router = useRouter();
+      
+   const dispatch = useDispatch<AppDispatch>()
   function submit(data:any){
-        console.log(data)
-    window.location.href="http://localhost:3000/product_listing"
+                  setLoading(true)
+
+            auth.Sign_In(data).then((res)=>{
+       
+             if(res?.status === 200){
+              
+              success();
+              setLoading(false)
+              
+         dispatch(addUser({
+            email: res?.data.email,
+            password: res?.data.password,
+            role: res?.data.role,
+            userName: res?.data.userName,
+            gender:res?.data.gender,
+            firstName: res?.data.firstName,
+            lastName: res?.data.lastName
+}))
+
+      setTimeout(() => {
+ router.push("/product_listing");        
+  }, 1000);      
+  }
+        else{
+             setLoading(false)
+
+          failed();
+        }
+         
+
+  });
   }
 
 
@@ -43,14 +87,18 @@ Log in with Google</button>
               <InputBoxComp
                 name="password"
                 control={control}
-                type="password"
+                type="text"
                 label="Password"
               />
 
               <div className='flex justify-between w-full items-center'>
                 <p className='font-bold text-[10px]'>Forgot Password</p>
  <div className="bg-gray-800  text-white text-center p-2 hover:bg-black rounded-md">
-                          <button type='submit' className='cursor-pointer' >Log in</button>
+                          <button type='submit' className='cursor-pointer' >
+                                             {loading ? <CircularProgress size={24} /> : "Sign-in"}
+                            
+                          </button>
+                       <ToastContainer />
                         </div>
 
               </div>
@@ -58,7 +106,7 @@ Log in with Google</button>
 
               <div className='flex items-center gap-2'>
                 <p className='font-bold text-[10px]'>Don't have an account?</p>
-              <Link href='/pages/sign_up  '><p className='text-[14px]'>Sign up</p></Link>  
+              <Link href='/sign_up  '><p className='text-[14px]'>Sign up</p></Link>  
               </div>
                        
               </div>

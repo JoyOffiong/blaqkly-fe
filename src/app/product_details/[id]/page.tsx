@@ -6,12 +6,10 @@ import Box from "@mui/material/Box";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/app/store/cartSlice";
 import { useParams } from "next/navigation";
-import blazer from "@/images/men blazer.webp";
 import { useForm } from "react-hook-form";
 import SelectBoxComp from "@/app/components/selectField";
 import ProductAPIs from "@/services/CRUD";
 import { Button } from "@mui/material";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { productDetail } from "@/model/productModel";
 

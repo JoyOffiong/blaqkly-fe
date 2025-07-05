@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import InputBoxComp from "../components/inputField";
-import Sign_Up from "../../services/authentication";
 import { useForm } from "react-hook-form";
 import SelectBoxComp from "../components/selectField";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -10,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Modal from "../components/modal";
+import auth from "../../services/authentication";
 
 function SignUp() {
   const { control, handleSubmit } = useForm();
@@ -26,14 +26,14 @@ function SignUp() {
 
     const { confirmPassword, ...formValues } = data;
 
-    Sign_Up(formValues)
+   auth.Sign_Up(formValues)
       .then((res) => {
         setLoading(false);
         console.log(res);
         if (res) {
           setOpen(true);
           if (!open) {
-            router.push("/product_listing");
+            router.push("/log_in");
           }
         }
       })
@@ -49,7 +49,12 @@ function SignUp() {
     { value: "female", label: "Female" },
   ];
 
-  //come back and work on the modal
+   const role = [
+    { value: "ADMIN", label: "Admin" },
+    { value: "SELLER", label: "Seller" },
+    { value: "BUYER", label: "Buyer" },
+  ];
+
   return (
     <>
       <div className="max-w-xl mx-auto my-20 shadow-[0_-4px_10px_rgba(0,0,0,0.3)] bg-white rounded-md">
@@ -113,6 +118,12 @@ function SignUp() {
               data={gender}
               label="Gender"
               name="gender"
+              control={control}
+            />
+             <SelectBoxComp
+              data={role}
+              label="Role"
+              name="role"
               control={control}
             />
 

@@ -5,16 +5,12 @@ import blazer from "@/images/men blazer.webp";
 import emptyCart from "@/images/emptyCart.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch, useSelector, UseSelector } from "react-redux";
+import { useDispatch, useSelector,  } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { addGrandTotal } from "../store/grandTotalSlice";
 import { formatNaira } from "../components/currencyFormating";
+import { CartItem } from "../store/cartSlice";
 
-type CartItem = {
-  price: number;
-  name: string;
-  quantity: number;
-};
 
 function Cart() {
 

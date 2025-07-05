@@ -1,8 +1,6 @@
 "use client"
 
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import blazer from "@/images/men blazer.webp";
 import { CiHeart } from "react-icons/ci";
 import { TfiComment } from "react-icons/tfi";
 import {productDetail} from "../../model/productModel";
@@ -14,6 +12,8 @@ import Button from '@mui/material/Button';
 import AddProduct from "../components/modals/addProduct";
 import Modal from "../components/modal";
 import ProductAPIs from "@/services/CRUD";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 
 function ProductListing() {
@@ -36,6 +36,9 @@ const [edit, setEdit] = useState<boolean>(false)
 const handleClose =()=>{setShowModal(false)}
 const closeSuccessModal =()=>{setShowSuccessModal(false)}
 
+  const LoggedInUser = useSelector((state: RootState) => state.user.items);
+
+
 const deleteProduct=(id:number)=>{
    ProductAPIs.DeleteProduct(id).then((res)=>{
     setDeleteSucccessModal(true)
@@ -46,6 +49,7 @@ const deleteProduct=(id:number)=>{
 
   const [editThis, setEditThis] = useState<productDetail>()
   const [editThisId, setEditThisId]= useState<number>()
+
 
 function editModal(id:number){
   setEditThisId(id)
@@ -60,7 +64,6 @@ function editModal(id:number){
 const closeEditModal =()=>{
   setShowEditModal(false)
 }
-
 
 const closeDeleteSuccessModal =()=>{
   setDeleteSucccessModal(false)
@@ -115,18 +118,18 @@ const closeDeleteSuccessModal =()=>{
                     <TfiComment />
                     <IoCartOutline />
                   </div>
-      
-        <hr className="border-gray-400" />
-                  
-                </div>
+                  {(LoggedInUser && LoggedInUser.role ==="SELLER" )  &&  <hr className="border-gray-400" />}
+
+                  </div>
               </div>
             </Link>
-            <div  className="p-3 flex justify-end gap-x-8">
+            {(LoggedInUser && LoggedInUser.role ==="SELLER" )  &&  <div  className="p-3 flex justify-end gap-x-8">
                     
       <MdDelete className="cursor-pointer" onClick={()=>deleteProduct(product_id)}/>
        <FaRegEdit className="cursor-pointer" 
                       onClick={()=>editModal(product_id)}/>
-                  </div>
+                  </div>}
+           
             </div>
           
           );
