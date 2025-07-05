@@ -34,7 +34,7 @@ import { useBudPayPayment } from "@budpay/react";
       amount: total,
       currency: 'NGN',
       reference: '' + Math.floor((Math.random() * 100000000000) + 1) + new Date().getSeconds(),
-      callback_url: "http://localhost:3000/product_listing",
+      callback_url: "http://localhost:3000/order_success",
         onComplete(response) {
             return response
         },
