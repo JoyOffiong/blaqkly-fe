@@ -41,7 +41,8 @@ function Login() {
             userName: res?.data.userName,
             gender:res?.data.gender,
             firstName: res?.data.firstName,
-            lastName: res?.data.lastName
+            lastName: res?.data.lastName,
+            phoneNumber:res?.data.phoneNumber
 }))
 
       setTimeout(() => {

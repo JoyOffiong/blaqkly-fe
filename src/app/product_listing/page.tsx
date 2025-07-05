@@ -76,9 +76,9 @@ const closeDeleteSuccessModal =()=>{
     <>
      <div className="mt-10 mx-4 p-2 rounded-lg  space-y-8">
    
-   <div className="flex justify-end">
-   <Button variant="outlined" onClick={()=>setShowModal(true)}>Add Product</Button>
-   </div>
+      <div className="flex justify-end">
+       <Button variant="outlined" onClick={()=>setShowModal(true)}>Add Product</Button>
+      </div>
      
      
 
@@ -135,6 +135,7 @@ const closeDeleteSuccessModal =()=>{
           );
         })}
       </div>
+      
     </div>
 {showModal && <AddProduct handleClose={handleClose} open = {showModal} setShowSuccessModal={setShowSuccessModal} fetchProducts={fetchProducts}/>}
 {showSuccessModal && <Modal handleClose={closeSuccessModal} open = {showSuccessModal} text={`${edit=== true ?"Product Updated Successfully": "Product Added Successfully" }`}/>}

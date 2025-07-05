@@ -94,6 +94,12 @@ function SignUp() {
               type="email"
               label="Email"
             />
+              <InputBoxComp
+              name="phoneNumber"
+              control={control}
+              type=""
+              label="phoneNumber"
+            />
             <InputBoxComp
               name="userName"
               control={control}

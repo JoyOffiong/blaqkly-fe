@@ -8,6 +8,7 @@ interface UserItem{
     gender:string;
     firstName: string;
     lastName: string;
+    phoneNumber: string
 }
 
 interface UserState{
