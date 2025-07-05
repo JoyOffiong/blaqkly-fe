@@ -3,12 +3,11 @@
 import React, { useState } from "react";
 import InputBoxComp from "../components/inputField";
 import { useForm } from "react-hook-form";
-import UseALATPay from "react-alatpay"
 import SelectBoxComp from "../components/selectField";
-import { useDispatch, useSelector } from "react-redux";
+import {paymentGateways} from "../components/paymentConfigs"
+import {  useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { formatNaira } from "../components/currencyFormating";
-import { useBudPayPayment } from '@budpay/react';
 
 function Checkout() {
   const total = useSelector((state: RootState) => state.grandTotal.total);
@@ -21,62 +20,33 @@ const handlePayment = (method: "alatpay" | "flutterwave" | "paystack" | "nomba" 
   handleSubmit((data) => submit(data, method))();
 };
 
-//alatpay
-   const ALATconfig = UseALATPay({
-      amount: total,
-      apiKey: "",
-      businessId: "582418f7-032f-48ca-27c8-08dcd31fac98",
-      currency: "NGN",
-      email: loggedInUser?.email,
-      firstName: loggedInUser?.firstName,
-      lastName: loggedInUser?.lastName,
-      color: "#000000",
-      metadata: undefined,
-      phone: "09099912345",
-      onClose: () => {
-        console.log("Payment popup closed");
+const InitializeALATPay = paymentGateways.ALATconfig(
+    loggedInUser,
+    total,
+    (response: any) => console.log("ALAT Transaction:", response),
+    () => console.log("ALAT Popup Closed")
+  );
+
+  const initializeBudPay = paymentGateways.BUDPAYconfig(
+   
+      loggedInUser,
+      total,
+      (response: any) => {
+        console.log("BudPay Completed:", response);
       },
-      onTransaction: (response: any) => {
-        console.log("Transaction response:", response);
-      },
-    });
-//budpay
-   const BUDPAYconfig=   useBudPayPayment({
-        api_key: 'pk_test_tlescwyoairgxmvixkf0vxqqli7yb1bcedpchl', // Replace with your public key
-        customer:{
-       email: 'blaqkly@gmail.com',
-      first_name: loggedInUser?.firstName,
-      last_name: loggedInUser?.lastName, 
-      phone: "09099912345"
-        },
-      amount: total,
-      currency: 'NGN',
-      reference: '' + Math.floor((Math.random() * 100000000000) + 1) + new Date().getSeconds(),
-      callback_url: "https://alatpay.ng",
-        onComplete: (data:any) => { 
-            console.log('Payment completed, Status:', data.status) 
-            console.log('Payment completed, Reference:', data.reference) 
-        },
-        onCancel: (data:any) => { 
-            console.log('Payment cancelled, Status:', data.status) 
-            console.log('Payment cancelled, Reference:', data.reference) 
-        },
-      
-    });
-
-
-
-
+      (data: any) => {
+        console.log("BudPay Cancelled:", data);
+      }
+    )
 
 const submit = (data: any, method: "alatpay" | "flutterwave" | "paystack" | "nomba" | "budpay") => {
   console.log(method);
   console.log(data)
   if (method === "alatpay") {
-   ALATconfig.submit();
+   InitializeALATPay.submit();
  } 
-  
-  else if (method === "budpay") {
-    BUDPAYconfig()
+ else if (method === "budpay") {
+    initializeBudPay()
   } else if (method === "paystack") {
     console.log("Paystack payment goes here");
   } else if (method === "nomba") {
