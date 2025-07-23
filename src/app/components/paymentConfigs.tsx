@@ -43,6 +43,8 @@ import { useBudPayPayment } from "@budpay/react";
         }
     });
 
+//paystack
+
 export const paymentGateways ={
     ALATconfig,
     BUDPAYconfig

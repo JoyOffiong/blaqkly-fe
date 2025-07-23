@@ -1,7 +1,9 @@
 import axios from "axios";
 
 
-const baseUrl = "http://localhost:8080/api"
+//const baseUrl = "http://localhost:8080/api"
+const baseUrl = "https://blaqkly-be.onrender.com/api"
+
 
 
 async function Sign_Up(data){

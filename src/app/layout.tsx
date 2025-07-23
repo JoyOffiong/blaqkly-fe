@@ -8,7 +8,7 @@ import Header from "./components/header";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { useRouter } from "next/router";
+
 import { usePathname } from "next/navigation";
 
 const geistSans = Geist({

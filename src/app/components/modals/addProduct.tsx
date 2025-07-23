@@ -94,6 +94,7 @@ const type =[{value:"Cloth", label:"Cloth"}, {value:"Shoe", label:"Shoe"}]
            <div className="mt-8">
             <form onSubmit={handleSubmit(addProduct)} >
               <div className="flex gap-4 flex-col mb-4">
+              
              <InputBoxComp control={control} name="name" type="text" label="Enter Name"/>
                <InputBoxComp control={control} name="price" type="number" label="Enter Price" />
 
