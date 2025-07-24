@@ -1,5 +1,4 @@
- import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
+
 import UseALATPay from "react-alatpay";
 import { useBudPayPayment } from "@budpay/react";
 
@@ -34,7 +33,7 @@ import { useBudPayPayment } from "@budpay/react";
       amount: total,
       currency: 'NGN',
       reference: '' + Math.floor((Math.random() * 100000000000) + 1) + new Date().getSeconds(),
-      callback_url: "http://localhost:3000/order_success",
+      callback_url: "https://blaqklyfe.netlify.app/order_success",
         onComplete(response) {
             return response
         },

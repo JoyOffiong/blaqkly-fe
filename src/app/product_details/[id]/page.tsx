@@ -87,7 +87,7 @@ function Product_Details() {
         quantity: count,
       })
     );
-    window.location.href ="http://localhost:3000/cart"
+    window.location.href ="https://blaqklyfe.netlify.app/cart"
   }
 
   useEffect(() => {

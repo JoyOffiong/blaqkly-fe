@@ -45,6 +45,7 @@ function Header() {
   const LogOut=()=>{
     dispatch((clearUser()))
     setConfirmModal(false)
+    window.location.href = "https://blaqklyfe.netlify.app/"
   }
 
   const itemsCount =useSelector((state:RootState )=> state.cart.items)
