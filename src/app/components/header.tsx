@@ -44,7 +44,7 @@ function Header() {
 
   const LogOut=()=>{
     dispatch((clearUser()))
-  
+    setConfirmModal(false)
   }
 
   const itemsCount =useSelector((state:RootState )=> state.cart.items)
