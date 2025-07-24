@@ -30,7 +30,10 @@ export default function Modal({ operation,handleClose, open, text, heading }: pr
           {text}{" "}
         </Typography>
 
-        {operation && <Button onClick={()=>operation()}>Click here to logout</Button>}
+<div className="flex justify-center mt-8">
+        {operation && <Button onClick={()=>operation()} variant="contained">logout</Button>}
+
+</div>
       </Box>
     </MuiModal>
   );

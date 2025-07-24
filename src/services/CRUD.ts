@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:8080/api"
+//const baseUrl = "http://localhost:8080/api"
+const baseUrl = "https://blaqkly-be.onrender.com/api"
 
  type productDetail = {
   product_id: number;

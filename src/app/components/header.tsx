@@ -129,7 +129,7 @@ function Header() {
         </div>
       </div>
 
-{confirmModal && <Modal operation={LogOut} handleClose={closeConfirmLogout} open={confirmModal}  text="confirm you wan to Log out"/> }
+{confirmModal && <Modal operation={LogOut} handleClose={closeConfirmLogout} open={confirmModal}  text="Are you sure you want to log out? You could shop some more you know, if you want."/> }
  
     </div>
   );
